@@ -1,14 +1,16 @@
 name: Lint
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
   push:
     branches:
       - main
   pull_request:
     branches:
       - main
+
+permissions:
+  checks: write
+  contents: write
 
 jobs:
   run-linters:
@@ -17,17 +19,18 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.10.13
+          python-version: 3.10
 
       - name: Install Python dependencies
-        run: pip install black
+        run: pip install black flake8
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
           black: true
+          flake8: true
