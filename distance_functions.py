@@ -30,10 +30,10 @@ def haversine_distance(x, y, R=6371):
         dLon / 2
     ) * np.sin(dLon / 2)
     c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
-    return R * c
+    return R * c, a
 
 
-def haversine_divergence(x, y, c=4):
+def haversine_divergence(x, y, c=5.83465):
     return (
         np.linalg.norm(np.sin(x / c)) ** 2
         - np.linalg.norm(np.sin(y / c)) ** 2
