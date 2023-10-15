@@ -8,18 +8,13 @@ def euclidean_grad(x, y):
 
 def haversine_grad(x, y, R=6371):
     grad = np.zeros_like(x)
-    grad[0] = (
-        2
-        * R
-        / ((1 - haversine_distance(x, y)[1]) * np.sqrt(haversine_distance(x, y)[1]))
-        * np.sin(x[0] - y[0])
-    )
+    a = haversine_distance(x, y)[1]
+    grad[0] = R / (2 * np.sqrt(1 - a) * np.sqrt(a)) * np.sin(x[0] - y[0])
     grad[1] = (
-        2
-        * R
-        / ((1 - haversine_distance(x, y)[1]) * np.sqrt(haversine_distance(x, y)[1]))
+        R
+        / (2 * np.sqrt(1 - a) * np.sqrt(a))
         * np.cos(x[0])
-        * np.sin(y[0])
+        * np.cos(y[0])
         * np.sin(x[1] - y[1])
     )
     return grad
