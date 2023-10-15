@@ -40,7 +40,7 @@ def haversine_divergence(x, y, c=5.83465):
         - (1 / c * np.sin(2 * y / c)).T.dot(x - y)
     )
 
-  
+
 def great_circle_distance(x, y, R=6371):
     # Great circle distance between two points on a sphere
     # x and y are tuples with (latitude, longitude)
