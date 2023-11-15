@@ -2,7 +2,31 @@ import numpy as np
 
 
 def euclidean_distance(x, y):
-    return np.linalg.norm(x - y) ** 2
+    return 1 / 2 * np.linalg.norm(x - y) ** 2
+
+
+def get_sines(x, i):
+    if i < 0:
+        return 1
+    else:
+        return np.multiply(np.sin(x[i]), get_sines(x, i - 1))
+
+
+def euclidean_distance_polar(x, y, r):
+    # Euclidean Distance in N dimensional polar coordinates
+    dist = 0
+    x = x + np.pi / 2
+    x[-1] = x[-1] + np.pi / 2
+    y = y + np.pi / 2
+    y[-1] = y[-1] + np.pi / 2
+    for i in range(len(x)):
+        dist += (
+            r**2
+            * (np.cos(x[i]) * get_sines(x, i - 1) - np.cos(y[i]) * get_sines(y, i - 1))
+            ** 2
+        )
+    dist += r**2 * (get_sines(x, len(x) - 1) - get_sines(y, len(y) - 1)) ** 2
+    return 1 / 2 * dist
 
 
 def manhattan_distance(x, y):
@@ -34,6 +58,7 @@ def haversine_distance(x, y, R=6371):
 
 
 def haversine_divergence(x, y, c=5.83465):
+    # Haversine Divergence in N dimensional polar coordinates
     return (
         np.linalg.norm(np.sin(x / c)) ** 2
         - np.linalg.norm(np.sin(y / c)) ** 2
